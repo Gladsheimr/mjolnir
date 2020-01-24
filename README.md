@@ -18,10 +18,6 @@ Markup language to define simple logic
 </Mjolnir>
 ```
 
-```
-#
-```
-
 *AI Services* 
 
 TinyML Bolt
