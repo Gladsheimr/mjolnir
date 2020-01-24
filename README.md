@@ -1,27 +1,98 @@
 # Mjolnir
 "Hammer of the gods, made in the heart of the densest stars"
 
-Compressed bytecode generated and deployed into unikernels
+Making device-native where application developers can develop full stack applications directly on devices. 
 
 ## Roadmap
 
-### Proof of Concept
+### Stage 1
 
-Build, deploy and execute on:
-1. cloud
-2. mobile phones
-3. hostile domains (websites)
-4. devices
+*Markup for UI/UX* 
 
+Markup language to define simple logic 
+```
+#app.mjl
+<Mjolnir>
+  <Device.LED rgb="#fff" intensity={(state)=> state.intensity }} /> 
+  <Device.Loop interval={3} intensity={mjl.loop(state.intensity)} /> 
+</Mjolnir>
+```
 
-Implementation ideas:
+```
+#
+```
 
-[Webassembly](https://github.com/mbasso/awesome-wasm) 
+*AI Services* 
 
-1. [Unikernel](http://unikernel.org/projects/) with either C++/Go wasm runner 
-2. Wasm loader in react-native 
-3. [Packer.js](https://parceljs.org) wrapper for HTML
-4. [Wasmachine](https://github.com/piranna/wasmachine) on FPGA and expanded GPU/TPU
+TinyML Bolt
+
+```
+... describe an lstm model in C? 
+
+```
+
+*Device configuration*
+
+Anvil file that describe device 
+```
+#minized-dev.anv 
+
+device:
+  soc:
+    - xilinx-zynq-xc7007s-soc
+    
+io:
+  ble:
+    stream:
+      - state.temp.value:rn
+      - state.up_or_down:rn
+  led:
+    states:
+      -intensity=mlr.float64
+      -color=mlr.int32
+  temp:    
+    states:
+      -celcius=mlr.float32
+      
+  
+services:
+  will_temp_raise:
+    states:
+      - up_or_down:mlr.bool
+    model:
+      context: model.c 
+     
+
+```
+
+# Orchestration and CLI Tools
+
+```
+mjl strike --anvil=minized-dev.anv --com=/dev/com-1 app.mlr
+  > building 
+  > deploy
+  
+mjl services
+  - will_temp_raise
+  
+mjl states
+  - ble
+  - led
+  - temp
+  
+mjl bolts state.temp services.will_temp_raise --out=csv,grpc
+  - Data streaming and available as gRPC call on 
+  mjl://Sx2SA112/csv
+  mjl://Sx2SA112/grpc
+    
+``
+
+# Next Steps
+
+1. Figure out if we can deploy model as WASM to FPGA
+2. How do we make WASM work? Is WASM a good model?
+3. Prototype out the above as if running on device
+4. Start making things work on device ;) 
 
 
 
