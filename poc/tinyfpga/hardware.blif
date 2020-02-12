@@ -7,21 +7,12 @@
 .names $true
 1
 .names $undef
-.gate SB_LUT4 I0=blink_counter[21] I1=$abc$442$n13 I2=$abc$442$n14 I3=$abc$442$n11 O=LED
+.gate SB_LUT4 I0=blink_counter[25] I1=blink_counter[24] I2=blink_counter[23] I3=$abc$442$n11_1 O=LED
 .attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:52"
-.param LUT_INIT 0000000000001101
-.gate SB_LUT4 I0=blink_counter[21] I1=$abc$442$n12 I2=blink_counter[25] I3=blink_counter[23] O=$abc$442$n11
+.param LUT_INIT 0100101100000000
+.gate SB_LUT4 I0=blink_counter[24] I1=blink_counter[25] I2=blink_counter[21] I3=blink_counter[22] O=$abc$442$n11_1
 .attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:52"
-.param LUT_INIT 1011110000000000
-.gate SB_LUT4 I0=blink_counter[22] I1=blink_counter[24] I2=$false I3=$false O=$abc$442$n12
-.attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:44"
-.param LUT_INIT 0001
-.gate SB_LUT4 I0=blink_counter[22] I1=blink_counter[23] I2=blink_counter[25] I3=blink_counter[24] O=$abc$442$n13
-.attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:52"
-.param LUT_INIT 0101010011111101
-.gate SB_LUT4 I0=blink_counter[23] I1=blink_counter[22] I2=blink_counter[24] I3=blink_counter[25] O=$abc$442$n14
-.attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:52"
-.param LUT_INIT 0000000101000000
+.param LUT_INIT 0000101110111011
 .gate SB_LUT4 I0=blink_counter[1] I1=$false I2=$false I3=$false O=$0\blink_counter[25:0][1]
 .attr src "/Users/kthakore/.apio/packages/toolchain-icestorm/bin/../share/yosys/ice40/cells_map.v:40"
 .param LUT_INIT 01
