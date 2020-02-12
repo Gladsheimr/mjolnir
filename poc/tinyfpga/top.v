@@ -3,6 +3,7 @@ module top (
     input CLK,    // 16MHz clock
     output LED,   // User/boot LED next to power LED
     output USBPU,  // USB pull-up resistor
+    output PIN_1, 
 );
     // drive USB pull-up resistor to '0' to disable USB
     assign USBPU = 0;
@@ -24,4 +25,5 @@ module top (
     
     // light up the LED according to the pattern
     assign LED = blink_pattern[blink_counter[25:21]];
+    assign PIN_1 = blink_pattern[blink_counter[25:21]];
 endmodule

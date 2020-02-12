@@ -1,7 +1,7 @@
-.pio
+*.pio
 .venv
-.dblite
-.asc
-.bin
-.blif
-.out
+*.dblite
+*.asc
+*.bin
+*.blif
+*.out
