@@ -1,0 +1,8 @@
+*.pio
+.venv
+*.dblite
+*.asc
+*.bin
+*.blif
+*.out
+*.vcd

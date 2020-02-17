@@ -1,0 +1,11 @@
+Adafruit-BluefruitLE==0.9.10
+beautifulsoup4==4.8.2
+future==0.18.2
+numpy==1.18.1
+protobuf==3.11.3
+pyobjc-core==6.1
+pyobjc-framework-Cocoa==6.1
+pyobjc-framework-CoreBluetooth==6.1
+scipy==1.4.1
+six==1.14.0
+soupsieve==1.9.5
