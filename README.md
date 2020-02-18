@@ -1,7 +1,7 @@
 # Mjolnir
 "Hammer of the gods, made in the heart of the densest stars"
 
-Making device-native where application developers can develop full stack applications directly on devices. 
+Making device-native applications where developers can develop full stack applications directly on devices. 
 
 ## Roadmap
 
