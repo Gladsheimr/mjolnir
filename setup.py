@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='mjolnir',
-      version='0.0.1',
+      version='0.0.2',
       description='Command line tools to orchestrate gladsheimr projects',
       author='Kartik Thakore',
       author_email='admin@maitrise.ai',
