@@ -3,6 +3,7 @@
 import os
 import click
 
+import logging 
 from mjl.anvil import Loader
 from mjl.serial import connect
 
@@ -10,7 +11,10 @@ import mjl.templates
 
 from cookiecutter.main import cookiecutter
 
+from cookiecutter.log import configure_logger 
+
 cookiecutter_root = mjl.templates.__path__[0]
+
 
 @click.group()
 def cli():
@@ -21,7 +25,6 @@ def init():
     """Setup project template"""
     print('Creating project folder')
     project_cookiecutter_dir = os.path.join(cookiecutter_root, 'project')
-    print('Found cookiecutter {}', project_cookiecutter_dir)
     cookiecutter(project_cookiecutter_dir)
 
 @click.command()
