@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
+import os
 import click
+
 from mjl.anvil import Loader
 from mjl.serial import connect
 
+import mjl.templates
+
 from cookiecutter.main import cookiecutter
 
+cookiecutter_root = mjl.templates.__path__[0]
 
 @click.group()
 def cli():
@@ -15,7 +20,9 @@ def cli():
 def init():
     """Setup project template"""
     print('Creating project folder')
-    cookiecutter('https://github.com/Gladsheimr/mjolnir-cookiecutter.git')
+    project_cookiecutter_dir = os.path.join(cookiecutter_root, 'project')
+    print('Found cookiecutter {}', project_cookiecutter_dir)
+    cookiecutter(project_cookiecutter_dir)
 
 @click.command()
 @click.option('--anvil', default='dev.anv', help='Anvil file')

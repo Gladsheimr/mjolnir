@@ -6,3 +6,5 @@ build
 dist
 
 mjl-projects
+
+*__pycache__*
