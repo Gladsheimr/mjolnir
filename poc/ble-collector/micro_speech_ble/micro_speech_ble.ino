@@ -129,15 +129,16 @@ void setup() {
 
   previous_time = 0;
 
-  drv_mjolnir->setup("MYNAMEISSLIM");
+  drv_mjolnir->setup("Mjolnir_micro_speech_poc");
 
-  
+  drv_mjolnir->add_characteristic("917649A1-D98E-11E5-9EEC-0012A5D5C52B");
+  drv_mjolnir->start();
 }
 
 // The name of this function is important for Arduino compatibility.
 void loop() {
   drv_mjolnir->connect();
-  drv_mjolnir->heartbeat();
+  
   
   // Fetch the spectrogram for the current time.
   const int32_t current_time = LatestAudioTimestamp();
@@ -174,6 +175,8 @@ void loop() {
     error_reporter->Report("RecognizeCommands::ProcessLatestResults() failed");
     return;
   }
+  if (is_new_command)
+    drv_mjolnir->write_to_characteristic("917649A1-D98E-11E5-9EEC-0012A5D5C52B", found_command);
   // Do something based on the recognized command. The default implementation
   // just prints to the error console, but you should replace this with your
   // own function for a real application.
