@@ -1,99 +1,66 @@
+from __future__ import print_function
+import asyncio
+import platform
+import sys
 
-import logging
-import time
-import uuid
+from reprint import output
 
-import Adafruit_BluefruitLE
+from bleak import BleakClient
 
-from scipy.io.wavfile import write
-import numpy as np
+import itertools
 
-
-# BASED ON EXAMPLE FROM Adafruit_BluefruitLE https://github.com/adafruit/Adafruit_Python_BluefruitLE/blob/master/examples/low_level.py
-
-SERVICE_ID = uuid.UUID('67aa4562-ba79-46a3-a86b-91675642a359')
-PDM_CHAR_ID = uuid.UUID('917649A1-D98E-11E5-9EEC-0002A5D5C511')
-SHORT_SAMPLE_CAPTURED_ID = uuid.UUID('917649A1-D98E-11E5-9EEC-0002A5D5C51B')
+import binascii
 
 
-ble = Adafruit_BluefruitLE.get_provider()
+result_chr = "6D7A5BC6-D196-4A6A-95F0-B1115FD36BB4"
 
-PDM_COLLECTED = bytearray()
+def process_hb(s, d):
+    hb = int.from_bytes(d, "little")
 
-samples = 0
+def set_result(s, d):
+    result = d
+
+def print_flush(t):
+    sys.stdout.write(t)
+
+    sys.stdout.write("\n")
+    sys.stdout.flush()
 
 
-def writeWav(data, ssa):
-    print(data)
-    write("samples/example_{}.wav".format(ssa), 16000, data)
+async def print_services(mac_addr: str, loop: asyncio.AbstractEventLoop):
+    async with BleakClient(mac_addr, loop=loop) as client:
+        svcs = await client.get_services()
+
+        
+
+        with output(initial_len=2, interval=0) as output_lines:
+            hb = itertools.cycle(["💖", "💓", "💞", "💕", "💝"])
+            if output_lines[0] is None and output_lines[0]:
+                output_lines[0] = "device_heartbeat:    💔"
+                output_lines[1] = "svc:model_res:   "
+            def set_output(value, idx):
+                output_lines[idx] = value
+            await client.start_notify("917649A1-D98E-11E5-9EEC-0002A5D5C51B", lambda x, y: set_output("device_heartbeat:    {}".format(next(hb)), 0) )
+            await client.start_notify("6D7A5BC6-D196-4A6A-95F0-B1115FD36BB4", lambda x, y: set_output("svc:model_res:       {}".format(y), 1) )
+
+        #await asyncio.gather(get_heartbeat(client), get_model_result(client))
+        while True:
+            await asyncio.sleep(1)
+
+#./mjolnir --config micro_speech.anv --output stdout --show-heartbeat true --services svc:model_result
+
+mac_addr = "756538B3-F262-494F-9C2C-A5872CA61D12"
 
 
 
-
-def main():
-    ble.clear_cached_data()
-
-    adapter = ble.get_default_adapter()
-    adapter.power_on()
-    print('Using adapter: {}'.format(adapter.name))
-
-    ble.disconnect_devices([SERVICE_ID])
-
-    print('Searching for UART device...')
+if __name__ == '__main__':
+        
+    loop = asyncio.get_event_loop()
+    
     try:
-        adapter.start_scan()
-        device = ble.find_device(service_uuids=[SERVICE_ID])
-        if device is None:
-            raise RuntimeError('Failed to find UART device!')
+        asyncio.ensure_future(print_services(mac_addr, loop))
+        loop.run_forever()
+    except:
+        pass
     finally:
-        adapter.stop_scan()
-
-    print('Connecting to device...')
-    device.connect()  
-    try:
-        print('Discovering services...')
-        device.discover([SERVICE_ID], [SHORT_SAMPLE_CAPTURED_ID, PDM_CHAR_ID])
-
-        uart = device.find_service(SERVICE_ID)
-        rx = uart.find_characteristic(PDM_CHAR_ID)
-        tx = uart.find_characteristic(SHORT_SAMPLE_CAPTURED_ID)
-
-
-
-        def received(data):
-            global PDM_COLLECTED
-            
-            dataBA = bytearray(data)
-
-            PDM_COLLECTED.append(dataBA[0])
-            PDM_COLLECTED.append(dataBA[1])
-            print("APPENDING TO ARRAY {} to {}".format(data, len(PDM_COLLECTED)))
-         
-
-        def receivedTx(data):
-            global PDM_COLLECTED
-            global samples
-            
-            newSample = int.from_bytes(data, byteorder='big') == 1
-            if newSample:
-                
-                if len(PDM_COLLECTED) > 0:
-
-                    writeWav(np.frombuffer(PDM_COLLECTED), samples)
-
-                    samples += 1
-
-        tx.start_notify(receivedTx)
-
-        print('Subscribing to RX characteristic changes...')
-        rx.start_notify(received)
-
-        print('Waiting 60 seconds to receive data from the device...')
-        time.sleep(60)
-    finally:
-        device.disconnect()
-
-
-ble.initialize()
-
-ble.run_mainloop_with(main)
+        loop.close()

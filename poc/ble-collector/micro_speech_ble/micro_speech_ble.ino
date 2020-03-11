@@ -56,7 +56,7 @@ mjolnir::Mjolnir* drv_mjolnir = nullptr;
 // The name of this function is important for Arduino compatibility.
 void setup() {
     Serial.begin(115200);
-    while (!Serial);
+    //while (!Serial);
   // Set up logging. Google style is to avoid globals or statics because of
   // lifetime uncertainty, but since this has a trivial destructor it's okay.
   // NOLINTNEXTLINE(runtime-global-variables)
@@ -129,9 +129,9 @@ void setup() {
 
   previous_time = 0;
 
-  drv_mjolnir->setup("Mjolnir_micro_speech_poc");
+  drv_mjolnir->setup("Mjolnir_MSC");
 
-  drv_mjolnir->add_characteristic("917649A1-D98E-11E5-9EEC-0012A5D5C52B");
+  drv_mjolnir->add_characteristic("6D7A5BC6-D196-4A6A-95F0-B1115FD36BB4");
   drv_mjolnir->start();
 }
 
@@ -176,7 +176,7 @@ void loop() {
     return;
   }
   if (is_new_command)
-    drv_mjolnir->write_to_characteristic("917649A1-D98E-11E5-9EEC-0012A5D5C52B", found_command);
+    drv_mjolnir->write_to_characteristic("6D7A5BC6-D196-4A6A-95F0-B1115FD36BB4", found_command);
   // Do something based on the recognized command. The default implementation
   // just prints to the error console, but you should replace this with your
   // own function for a real application.
