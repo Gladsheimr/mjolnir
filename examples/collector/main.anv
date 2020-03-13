@@ -1,0 +1,17 @@
+version: "1"
+
+device:
+    type: arduino_ble_nano_33
+    name: Collector
+    io:
+        ble:
+            - state.pdm:rn
+        serial:
+            - state.pdm
+    
+services:
+    audio_raw:
+        devices:
+            - Collector
+
+
