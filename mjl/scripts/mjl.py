@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import click
+from mjl.anvil import Loader
+from mjl.serial import connect
 
 
 @click.group()
@@ -12,7 +14,12 @@ def cli():
 @click.option('--com', help='Serial COM port')
 def strike(anvil, com):
     """Setup project to orchestrate anvil files"""
-    click.echo('> building {}'.format(anvil))
+    click.echo('> create file')
+    connect(com=com)
+    click.echo('> loading {}'.format(anvil))
+
+    l = Loader(anvil)
+
 
 
 cli.add_command(strike)
