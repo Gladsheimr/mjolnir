@@ -35,7 +35,7 @@ pickleshare==0.7.5
 prometheus-client==0.7.1
 prompt-toolkit==3.0.3
 ptyprocess==0.6.0
-Pygments==2.5.2
+Pygments==2.7.4
 PyJWT==1.7.1
 pyrsistent==0.15.7
 pyserial==3.4
