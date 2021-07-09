@@ -4,3 +4,7 @@ build
 *.egg-info
 
 dist
+
+mjl-projects
+
+*__pycache__*

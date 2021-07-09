@@ -1,0 +1,7 @@
+version: "{{cookiecutter.version}}"
+
+
+devices:
+    # List devices here 
+services:
+    # List services that stream data 
