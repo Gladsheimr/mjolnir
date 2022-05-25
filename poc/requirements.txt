@@ -15,7 +15,7 @@ marshmallow==2.20.5
 packaging==20.1
 platformio==4.1.0
 pyelftools==0.26
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyparsing==2.4.6
 pyrsistent==0.15.7
 pyserial==3.4
